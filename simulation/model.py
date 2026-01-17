@@ -2,7 +2,7 @@ import numpy as np
 
 
 class ReactionDiffusionModel:
-    def __init__(self, Nx, Ny, U, V, Du, Dv, F, k, dt) -> None:
+    def __init__(self, Nx, Ny, Du, Dv, F, k, dt) -> None:
         """ Nx = width,
         Ny = height,
         Du = diffusion rate of U,
@@ -19,8 +19,8 @@ class ReactionDiffusionModel:
         self.k = k
         self.dt = dt
 
-        self.U = U
-        self.V = V
+        self.U = None
+        self.V = None
 
     def get_grid(self):
         """ Returns the current grids in order U, V """
@@ -35,8 +35,25 @@ class ReactionDiffusionModel:
             + np.roll(Z, -1, axis=1)
         )
 
-    def update_grid(self):
+    def initialize_grid(self):
+        U = np.ones((self.Nx, self.Ny))
+        V = np.zeros((self.Nx, self.Ny))
+
+        r = 10
+        centerX = self.Nx // 2
+        centerY = self.Ny // 2
+        U[centerX - r:centerX + r, centerX - r:centerX + r] = 0.5
+        V[centerY - r:centerY + r, centerY - r:centerY + r] = 0.25
+
+        self.U = U
+        self.V = V
+
+    def update(self):
         """ Using Gray-Scott Model of Reaction Diffusion """
+        if (self.U is None) or (self.V is None):
+            self.initialize_grid()
+            return
+
         Lu = self.laplacian(self.U)
         Lv = self.laplacian(self.V)
 
