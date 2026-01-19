@@ -2,6 +2,7 @@ import sys
 sys.path.append("..")
 
 import simulation.animate as animate
+import simulation.draw as draw
 from simulation.model import ReactionDiffusionModel as rdm
 
 
@@ -27,3 +28,10 @@ _ = animate.run_animation(model, n)
 
 # Animate a model with repeat loop
 _ = animate.run_animation(model, n, True)
+
+# Draw a grid of graphs
+models = []
+for f in [0.04, 0.04, 0.02, 0.3]:
+    models.append(rdm(N, N, Du, Dv, f, k, dt))
+
+draw.draw_multi(models, n, 2, 2)
