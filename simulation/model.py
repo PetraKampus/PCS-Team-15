@@ -26,6 +26,12 @@ class ReactionDiffusionModel:
         """ Returns the current grids in order U, V """
         return self.U, self.V
 
+    def setF(self, nF):
+        self.F = nF
+
+    def setK(self, nK):
+        self.k = nK
+
     def laplacian(self, Z):
         return (
             -4 * Z
