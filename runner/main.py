@@ -1,7 +1,3 @@
-"""
-Entry point for running and visualising the Gray–Scott reaction–diffusion model.
-This script reproduces the experiments used in the project report.
-"""
 import sys
 sys.path.append("..")
 from simulation.model import ReactionDiffusionModel
@@ -39,9 +35,6 @@ F_k = [
 
 
 def main():
-    """
-    Run a single Gray–Scott simulation and visualise the result.
-    """
 
     # Create a reaction–diffusion model instance
     model = ReactionDiffusionModel(
