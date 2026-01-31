@@ -2,6 +2,10 @@ import numpy as np
 
 
 class ReactionDiffusionModel:
+    """
+    Gray–Scott Reaction-Diffusion model on a 2D grid.
+    Simulates the evolution of chemical concentrations U and V over time.
+    """
     def __init__(self, Nx, Ny, Du, Dv, F, k, dt) -> None:
         """ Nx = width,
         Ny = height,
@@ -23,16 +27,19 @@ class ReactionDiffusionModel:
         self.V = None
 
     def get_grid(self):
-        """ Returns the current grids in order U, V """
+        # Returns the current grids in order U, V
         return self.U, self.V
 
     def setF(self, nF):
+        # Update the feed rate.
         self.F = nF
 
     def setK(self, nK):
+        # Update the kill rate.
         self.k = nK
 
     def laplacian(self, Z):
+        # Compute discrete Laplacian using five-point stencil.
         return (
             -4 * Z
             + np.roll(Z,  1, axis=0)
@@ -42,6 +49,7 @@ class ReactionDiffusionModel:
         )
 
     def initialize_grid(self):
+        # Initialize U and V grids with small perturbation
         U = np.ones((self.Nx, self.Ny))
         V = np.zeros((self.Nx, self.Ny))
 
@@ -55,7 +63,7 @@ class ReactionDiffusionModel:
         self.V = V
 
     def update(self):
-        """ Using Gray-Scott Model of Reaction Diffusion """
+        # Perform one time step of the Gray-Scott reaction-diffusion equations
         if (self.U is None) or (self.V is None):
             self.initialize_grid()
             return

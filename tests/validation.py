@@ -11,6 +11,10 @@ from metrics import (
     temporal_change
 )
 
+
+# -------------------------------
+# Parameter sweep function
+# -------------------------------
 def sweep_F_k(
     Nx=200,
     Ny=200,
@@ -58,8 +62,12 @@ def sweep_F_k(
     return results
 
 
-sweep_F_k()
+# sweep_F_k()  # Results are alredy store in results.json
 
+
+# -------------------------------
+# Metric plotting function
+# -------------------------------
 def plot_metric(metric_name, label, cmap="viridis"):
     with open("results.json") as f:
         data = json.load(f)
@@ -94,6 +102,9 @@ def plot_metric(metric_name, label, cmap="viridis"):
     print(f"Saved: {filename}")
 
 
+# -------------------------------
+# Generate all metric plots  (they are stored in tests/plots/)
+# -------------------------------
 
 plot_metric("variance", "Variance (spatial contrast)", cmap="inferno")
 plot_metric("entropy", "Entropy (complexity)", cmap="inferno")

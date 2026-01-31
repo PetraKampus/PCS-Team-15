@@ -3,11 +3,15 @@ from matplotlib.animation import FuncAnimation
 from matplotlib.colors import ListedColormap
 from .model import ReactionDiffusionModel as rdm
 
+# Threshold for binary visualisation
 THRESHOLD = 0.2
 
 BW_YELLOW = ListedColormap(['#FFD700', '#000000'])
 
 
+# -------------------------------
+# Animation frame generators
+# -------------------------------
 def generate_binary_animation(model: rdm, n: int):
     for _ in range(n):
         model.update()
@@ -21,6 +25,9 @@ def generate_animation(model: rdm, n: int):
         yield V
 
 
+# -------------------------------
+# Animation runners
+# -------------------------------
 def run_animation(model: rdm, n: int, binary: bool, r: bool = False):
     fig, ax = plt.subplots(figsize=(6, 6))
     ax.set_title(
@@ -29,7 +36,6 @@ def run_animation(model: rdm, n: int, binary: bool, r: bool = False):
     )
     ax.axis('off')
 
-    # First frame
     model.initialize_grid()
     _, V = model.get_grid()
 
@@ -124,6 +130,9 @@ def run_animation_side_by_side(model: rdm, n: int, r: bool = False):
     return anim
 
 
+# -------------------------------
+# Static simulations
+# -------------------------------
 def run_simulation(model: rdm, n: int, binary: bool = True):
     model.initialize_grid()
     for _ in range(n):

@@ -1,13 +1,15 @@
 import numpy as np
 
+# Compute the variance of a 2D field.
 def variance(field):
     return np.var(field)
 
+
+# Compute the entropy of the field's distribution.
 def entropy(field, bins=50, eps=1e-12):
     vmin = np.min(field)
     vmax = np.max(field)
 
-    # Degenerate or nearly constant field
     if vmax - vmin < eps:
         return 0.0
 
@@ -21,6 +23,8 @@ def entropy(field, bins=50, eps=1e-12):
     hist = hist[hist > 0]
     return -np.sum(hist * np.log(hist))
 
+
+# Estimate the dominant spatial frequency of patterns in the field.
 def dominant_frequency(field):
     fft = np.fft.fftshift(np.fft.fft2(field))
     power = np.abs(fft) ** 2
@@ -31,6 +35,8 @@ def dominant_frequency(field):
     idx = np.unravel_index(np.argmax(power), power.shape)
     return np.linalg.norm(np.array(idx) - c)
 
+
+# Measure average temporal change between consecutive field snapshots.
 def temporal_change(history):
     diffs = [
         np.mean(np.abs(history[i+1] - history[i]))
