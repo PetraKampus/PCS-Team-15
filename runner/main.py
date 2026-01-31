@@ -20,11 +20,11 @@ F_k = [[0.04, 0.065],
        [0.035, 0.065]]
 
 model = ReactionDiffusionModel(N, N, Du, Dv, F, k, dt)
-# animate.run_animation(model, n, False)
+animate.run_simulation(model, n, True)
 
-for pair in F_k:
-    model.setF(pair[0])
-    model.setK(pair[1])
-    print(f"F:{pair[0]}, k:{pair[1]}")
-    animate.run_simulation_side_by_side(model, n)
+# for pair in F_k:
+#     model.setF(pair[0])
+#     model.setK(pair[1])
+#     print(f"F:{pair[0]}, k:{pair[1]}")
+#     animate.run_simulation_side_by_side(model, n)
 
